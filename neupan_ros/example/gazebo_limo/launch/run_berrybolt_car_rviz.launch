@@ -1,0 +1,15 @@
+<launch>
+    <arg name="robot_namespace" default="/"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find berrybolt_car)/urdf/berrybolt_car.urdf'
+        robot_namespace:=$(arg robot_namespace)" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- Publish zero/default joint states so robot_state_publisher can output TF for non-fixed joints -->
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
+
+    <!-- Provide a fixed transform so RViz with Fixed Frame=odom can see the robot -->
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_base_link" args="0 0 0 0 0 0 odom base_link" /> -->
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find neupan_ros)/example/gazebo_limo/rviz/limo_gazebo.rviz" />
+</launch>

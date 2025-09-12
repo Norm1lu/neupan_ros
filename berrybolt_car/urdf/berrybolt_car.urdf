@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="berrybolt_car">
+  <link
+    name="chassis_link">
+    <inertial>
+      <origin
+        xyz="0.123592573086514 -0.000127188237525444 0.148137442964577"
+        rpy="0 0 0" />
+      <mass
+        value="118.906096574078" />
+      <inertia
+        ixx="3.40286199411556"
+        ixy="0.000322047411634893"
+        ixz="-0.0970981491313201"
+        iyy="6.64502433986237"
+        iyz="1.29900112892627E-15"
+        izz="7.94958505891701" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="car_left_link">
+    <inertial>
+      <origin
+        xyz="1.27883369924892E-07 1.99591727728654E-07 -0.397357591093793"
+        rpy="0 0 0" />
+      <mass
+        value="1.69535777184176" />
+      <inertia
+        ixx="0.00408021086053147"
+        ixy="4.70480393507961E-09"
+        ixz="-2.06386271814498E-09"
+        iyy="0.00408017836513792"
+        iyz="2.27554090271651E-09"
+        izz="0.00778124754632217" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="car_left_joint"
+    type="continuous">
+    <origin
+      xyz="0.028178 0.1823 -0.10008"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="chassis_link" />
+    <child
+      link="car_left_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="20"
+      velocity="20" />
+  </joint>
+  <link
+    name="car_right_link">
+    <inertial>
+      <origin
+        xyz="1.60128715481767E-07 -1.1604035590751E-07 -0.397357584413733"
+        rpy="0 0 0" />
+      <mass
+        value="1.69535732852865" />
+      <inertia
+        ixx="0.00408019028109774"
+        ixy="3.35894090242273E-09"
+        ixz="3.07080977027858E-09"
+        iyy="0.00408020796298602"
+        iyz="-3.5669070357386E-10"
+        izz="0.00778125634877439" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="car_right_joint"
+    type="continuous">
+    <origin
+      xyz="0.028178 -0.1823 -0.10008"
+      rpy="1.5708 0 0" />
+    <parent
+      link="chassis_link" />
+    <child
+      link="car_right_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="20"
+      velocity="20" />
+  </joint>
+  <link
+    name="front_lidar_link">
+    <!-- 作为纯坐标系的空链接：不包含可视与碰撞几何 -->
+  </link>
+  <joint
+    name="front_lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0.658 0 0.08999999999999987"
+      rpy="3.14159265358979 0 0" />
+    <parent
+      link="car_castor_link" />
+    <child
+      link="front_lidar_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="car_castor_link">
+    <inertial>
+      <origin
+        xyz="0 -7.28583859910259E-17 0.040798215379193"
+        rpy="0 0 0" />
+      <mass
+        value="0.122429203673205" />
+      <inertia
+        ixx="0.000405340105920664"
+        ixy="-5.58346913473303E-21"
+        ixz="-6.39564810216737E-20"
+        iyy="0.000236842664943871"
+        iyz="2.13226211749419E-19"
+        izz="0.000244605681982183" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_castor_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_castor_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="car_castor_joint"
+    type="fixed">
+    <origin
+      xyz="0.4569 0 -0.001"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="chassis_link" />
+    <child
+      link="car_castor_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link
+    name="car_castor_link1">
+    <inertial>
+      <origin
+        xyz="5.55111512312578E-17 0 -0.03"
+        rpy="0 0 0" />
+      <mass
+        value="1.14298831955974" />
+      <inertia
+        ixx="0.00219726083160743"
+        ixy="-1.42271756636671E-19"
+        ixz="6.58742118163083E-20"
+        iyy="0.00219726083160743"
+        iyz="1.55985458318603E-20"
+        izz="0.00372856954499152" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_castor_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://berrybolt_car/meshes/car_castor_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="car_castor_joint1"
+    type="fixed">
+    <origin
+      xyz="0 0.03 0.12"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="car_castor_link" />
+    <child
+      link="car_castor_link1" />
+    <axis xyz="0 0 -1" />
+  </joint>
+  <!-- Add transmissions for left/right drive joints (Velocity interface) -->
+  <transmission name="left_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="car_left_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="right_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="car_right_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- Gazebo differential drive plugin (top-level) to publish odom and TF and consume /cmd_vel -->
+  <gazebo>
+    <plugin name="gazebo_ros_diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <leftJoint>car_left_joint</leftJoint>
+      <rightJoint>car_right_joint</rightJoint>
+      <wheelSeparation>0.46</wheelSeparation>
+      <wheelDiameter>1.0</wheelDiameter>
+      <torque>100.0</torque>
+      <commandTopic>/cmd_vel</commandTopic>
+      <odometryTopic>/odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishTf>true</publishTf>
+      <publishOdomTF>true</publishOdomTF>
+      <updateRate>100</updateRate>
+    </plugin>
+  </gazebo>
+
+  <!-- Gazebo laser sensor on front_lidar_link to publish /limo/scan -->
+  <gazebo reference="front_lidar_link">
+    <sensor type="ray" name="front_laser">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>20</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.57</min_angle>
+            <max_angle>1.57</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>8.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+        <topicName>/limo/scan</topicName>
+        <frameName>front_lidar_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <!-- Add a standard-oriented base_link and connect to chassis_link by a fixed 180deg Z rotation -->
+  <link name="base_link"/>
+  <joint name="base_to_chassis" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis_link"/>
+    <origin xyz="0 0 0" rpy="0 0 3.1416"/>
+  </joint>
+  <!-- Gazebo contact/friction tuning: drive wheels high grip -->
+  <gazebo reference="car_left_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>100000.0</kp>
+    <kd>1.0</kd>
+    <maxVel>0.5</maxVel>
+  </gazebo>
+  <gazebo reference="car_right_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>100000.0</kp>
+    <kd>1.0</kd>
+    <maxVel>0.5</maxVel>
+  </gazebo>
+  <!-- Caster support: small tangential friction, high normal stiffness for support only -->
+  <gazebo reference="car_castor_link">
+    <mu1>0.10</mu1>
+    <mu2>0.02</mu2>
+    <slip1>1.0</slip1>
+    <slip2>1.0</slip2>
+    <kp>2000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.05</maxVel>
+  </gazebo>
+  <gazebo reference="car_castor_link1">
+    <mu1>0.10</mu1>
+    <mu2>0.02</mu2>
+    <slip1>1.0</slip1>
+    <slip2>1.0</slip2>
+    <kp>2000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.05</maxVel>
+  </gazebo>
+</robot>

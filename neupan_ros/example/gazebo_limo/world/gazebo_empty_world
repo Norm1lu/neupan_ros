@@ -1,0 +1,562 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>1 1 1 1</ambient>
+      <background>1 1 1 1</background>
+      <shadows>0</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <population name='cross_population1'>
+      <model name='cross'>
+        <link name='link'>
+          <inertial>
+            <pose>0 0 -0.025 0 -0 0</pose>
+            <mass>0.5</mass>
+            <inertia>
+              <ixx>0.00455435</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>0.00455435</iyy>
+              <iyz>0</iyz>
+              <izz>0.00833187</izz>
+            </inertia>
+          </inertial>
+          <collision name='collisionY'>
+            <pose>0 0 -0.025 1.5707 -0 0</pose>
+            <geometry>
+              <cylinder>
+                <length>0.3162</length>
+                <radius>0.1</radius>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <collision name='collisionX'>
+            <pose>0 0 -0.025 0 1.5707 0</pose>
+            <geometry>
+              <cylinder>
+                <length>0.3162</length>
+                <radius>0.0483</radius>
+              </cylinder>
+            </geometry>
+            <max_contacts>10</max_contacts>
+            <surface>
+              <contact>
+                <ode/>
+              </contact>
+              <bounce/>
+              <friction>
+                <torsional>
+                  <ode/>
+                </torsional>
+                <ode/>
+              </friction>
+            </surface>
+          </collision>
+          <visual name='visual'>
+            <geometry>
+              <mesh>
+                <uri>model://cross_joint_part/meshes/cross_joint.dae</uri>
+              </mesh>
+              <pose>0 0 -0.025 0 1.5707 0</pose>
+            </geometry>
+            <material>
+              <script>
+                <uri>model://arm_part/materials/scripts</uri>
+                <uri>model://arm_part/materials/textures</uri>
+                <name>ArmPart/Diffuse</name>
+              </script>
+            </material>
+          </visual>
+          <self_collide>0</self_collide>
+          <enable_wind>0</enable_wind>
+          <kinematic>0</kinematic>
+        </link>
+        <pose>-4e-06 -0 0 0 -0 0</pose>
+        <plugin name='multi_obs' filename='libmulti_obs.so'/>
+      </model>
+      <pose>0 0 0 0 -0 0</pose>
+      <box>
+        <size>5 5 0.01</size>
+      </box>
+      <model_count>10</model_count>
+      <distribution>
+        <type>random</type>
+      </distribution>
+    </population>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>8.43238 -17.2252 13.6204 -0 0.637796 1.94951</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='berrybolt/'>
+      <link name='base_link'>
+        <inertial>
+          <pose>-0.127102 0.000125 0.145384 0 -0 0</pose>
+          <mass>120.172</mass>
+          <inertia>
+            <ixx>3.49176</ixx>
+            <ixy>0.000244452</ixy>
+            <ixz>-0.0120236</ixz>
+            <iyy>6.87439</iyy>
+            <iyz>-4.14477e-05</iyz>
+            <izz>8.09113</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_fixed_joint_lump__chassis_link_collision'>
+          <pose>0 0 0 0 0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__car_castor_link_collision_1'>
+          <pose>-0.4569 -3e-06 -0.001 -3.14159 -0 1.5e-05</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_castor_link.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>2e+06</kp>
+                <kd>100</kd>
+                <max_vel>0.05</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.02</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__car_castor_link1_collision_2'>
+          <pose>-0.4569 -0.030002 -0.121 1.5708 -0 1.5e-05</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_castor_link1.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>2e+06</kp>
+                <kd>100</kd>
+                <max_vel>0.05</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.02</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='base_link_fixed_joint_lump__chassis_link_visual'>
+          <pose>0 0 0 0 0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/base_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__car_castor_link_visual_1'>
+          <pose>-0.4569 -3e-06 -0.001 -3.14159 -0 1.5e-05</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_castor_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__car_castor_link1_visual_2'>
+          <pose>-0.4569 -0.030002 -0.121 1.5708 -0 1.5e-05</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_castor_link1.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <sensor name='front_laser' type='ray'>
+          <visualize>0</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>720</samples>
+                <resolution>1</resolution>
+                <min_angle>1.57</min_angle>
+                <max_angle>4.71</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.05</min>
+              <max>8</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <stddev>0.01</stddev>
+            </noise>
+          </ray>
+          <plugin name='gazebo_ros_laser' filename='libgazebo_ros_laser.so'>
+            <topicName>/limo/scan</topicName>
+            <frameName>front_lidar_link</frameName>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+          <pose>0.2011 1e-06 -0.09 0 -0 -3.14159</pose>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+        <slip1>1.0</slip1>
+        <slip2>1.0</slip2>
+        <slip1>1.0</slip1>
+        <slip2>1.0</slip2>
+      </link>
+      <joint name='car_left_joint' type='revolute'>
+        <pose relative_to='base_link'>-0.028177 -0.1823 -0.10008 1.5708 -0 1.5e-05</pose>
+        <parent>base_link</parent>
+        <child>car_left_link</child>
+        <axis>
+          <xyz>0 0 -1</xyz>
+          <limit>
+            <effort>20</effort>
+            <velocity>20</velocity>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='car_left_link'>
+        <pose relative_to='car_left_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 -0.397358 0 -0 0</pose>
+          <mass>1.69536</mass>
+          <inertia>
+            <ixx>0.00408021</ixx>
+            <ixy>4.7048e-09</ixy>
+            <ixz>-2.06386e-09</ixz>
+            <iyy>0.00408018</iyy>
+            <iyz>2.27554e-09</iyz>
+            <izz>0.00778125</izz>
+          </inertia>
+        </inertial>
+        <collision name='car_left_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_left_link.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>100000</kp>
+                <kd>1</kd>
+                <max_vel>0.5</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='car_left_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_left_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='car_right_joint' type='revolute'>
+        <pose relative_to='base_link'>-0.028179 0.1823 -0.10008 1.5708 -0 -3.14159</pose>
+        <parent>base_link</parent>
+        <child>car_right_link</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <effort>20</effort>
+            <velocity>20</velocity>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='car_right_link'>
+        <pose relative_to='car_right_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 -0 -0.397358 0 -0 0</pose>
+          <mass>1.69536</mass>
+          <inertia>
+            <ixx>0.00408019</ixx>
+            <ixy>3.35894e-09</ixy>
+            <ixz>3.07081e-09</ixz>
+            <iyy>0.00408021</iyy>
+            <iyz>-3.56691e-10</iyz>
+            <izz>0.00778126</izz>
+          </inertia>
+        </inertial>
+        <collision name='car_right_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_right_link.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>100000</kp>
+                <kd>1</kd>
+                <max_vel>0.5</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='car_right_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/lww/Reserach/neupan_ws/src/berrybolt_car/meshes/car_right_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <static>0</static>
+      <plugin name='gazebo_ros_diff_drive' filename='libgazebo_ros_diff_drive.so'>
+        <leftJoint>car_left_joint</leftJoint>
+        <rightJoint>car_right_joint</rightJoint>
+        <wheelSeparation>0.46</wheelSeparation>
+        <wheelDiameter>1.0</wheelDiameter>
+        <torque>100.0</torque>
+        <commandTopic>/cmd_vel</commandTopic>
+        <odometryTopic>/odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <robotBaseFrame>base_link</robotBaseFrame>
+        <publishTf>1</publishTf>
+        <publishOdomTF>1</publishOdomTF>
+        <updateRate>100</updateRate>
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+      <pose>-2 0 0.05 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>325 986000000</sim_time>
+      <real_time>469 796667557</real_time>
+      <wall_time>1757641639 899888963</wall_time>
+      <iterations>162993</iterations>
+      <model name='berrybolt/'>
+        <pose>2.07259 1.95006 0.196584 -1e-05 0.007135 -0.180924</pose>
+        <scale>1 1 1</scale>
+        <link name='base_link'>
+          <pose>2.07259 1.95006 0.196584 -1e-05 0.007135 -0.180924</pose>
+          <velocity>0.363215 -0.052264 -0.003052 4.6e-05 0.002796 0.41492</velocity>
+          <acceleration>0.229088 0.089267 0.237063 2.10314 -1.34877 0.206895</acceleration>
+          <wrench>27.5299 10.7274 28.4883 0 -0 0</wrench>
+        </link>
+        <link name='car_left_link'>
+          <pose>2.01161 1.77607 0.098091 1.57286 0.335056 -0.180607</pose>
+          <velocity>0.427519 -0.075938 0.029264 -2.67203 0.418166 -2.74019</velocity>
+          <acceleration>-0.124918 0.100011 -8.52663 1.12019 -1.05861 -2.48362</acceleration>
+          <wrench>-0.211781 0.169554 -14.4557 0 -0 0</wrench>
+        </link>
+        <link name='car_right_link'>
+          <pose>2.07691 2.13441 0.098492 -1.5721 0.280163 -0.182028</pose>
+          <velocity>0.277978 -0.05005 0.002066 -2.34365 -1.33005 -2.72807</velocity>
+          <acceleration>-6.14117 2.04341 2.15794 0.405677 -0.945962 3.08322</acceleration>
+          <wrench>-10.4115 3.46432 3.65848 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+  </world>
+</sdf>

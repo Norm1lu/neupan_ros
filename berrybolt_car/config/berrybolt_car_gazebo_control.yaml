@@ -1,0 +1,23 @@
+# Publish all joint states -----------------------------------
+berrybolt_car_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 100
+
+# Differential drive controller (publishes odom and TF)
+diff_drive_controller:
+  type: diff_drive_controller/DiffDriveController
+  left_wheel: ['car_left_joint']
+  right_wheel: ['car_right_joint']
+  publish_rate: 50
+  cmd_vel_timeout: 0.5
+  enable_odom_tf: true
+  base_frame_id: base_link
+  odom_frame_id: odom
+  # 明确指定轮距与半径，数值需按你的车实测调整
+  wheel_separation: 0.43   # car_left_joint 与 car_right_joint 在 y 方向相差 ~0.3646m
+  wheel_radius: 0.1        # 估值，如有实际尺寸请替换
+
+# PID gains for Gazebo ros_control plugin
+/gazebo_ros_control/pid_gains:
+  car_left_joint:  {p: 1000000.0, i: 0.0, d: 0.005}
+  car_right_joint: {p: 1000000.0, i: 0.0, d: 0.005} 

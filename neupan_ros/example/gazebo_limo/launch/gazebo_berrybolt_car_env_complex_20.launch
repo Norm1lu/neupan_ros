@@ -1,0 +1,52 @@
+<launch>
+
+    <arg name="robot_namespace" default="/"/>
+    <arg name="world_name" default="$(find neupan_ros)/example/gazebo_limo/world/gazebo_empty_world.world"/>
+    
+     <!-- initial pose -->
+    <arg name="x" default="-2.0"/>
+    <arg name="y" default="0.0"/>
+    <arg name="z" default="0.05"/>
+    <arg name="yaw" default="0"/>
+
+    <rosparam command="load" file = "$(find neupan_ros)/example/gazebo_limo/config/rvo_config_complex.yaml"/>
+
+    <!-- Re-enable rvo_ros with auto-respawn to avoid whole-launch crash on segfaults -->
+    <node name="rvo_node" pkg="rvo_ros" type="rvo_node" output="screen" required="false" respawn="true" respawn_delay="2">
+        <remap from="/rvo/model_states" to="/gazebo/model_states"/>
+        <remap from="/rvo_vel" to="/obstacles_velocity"/>
+    </node>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <param name="robot_description" command="$(find xacro)/xacro '$(find berrybolt_car)/urdf/berrybolt_car.urdf'
+        robot_namespace:=$(arg robot_namespace)" />
+
+    <node name="spawn_limo_model" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x)
+              -y $(arg y)
+              -z $(arg z)
+              -Y $(arg yaw)
+              -unpause
+              -urdf
+              -param robot_description
+              -model 'berrybolt$(arg robot_namespace)'" />
+
+    <!-- Removed ros_control controllers; we use Gazebo diff drive plugin in URDF -->
+    <!-- <rosparam file="$(find berrybolt_car)/config/berrybolt_car_gazebo_control.yaml" command="load"/> -->
+    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner"
+          respawn="false" output="screen" args="berrybolt_car_state_controller diff_drive_controller"/> -->
+
+    <!-- Re-enable random goals publisher with respawn; expand random area to [-8,8]x[-6,6] -->
+    <!-- <node name="rvo_ros" pkg="rvo_ros" type="set_goals_client" args="random -10.0 10.0 -15.0 15.0" output="screen" required="false" respawn="true" respawn_delay="2"/> -->
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+</launch>
