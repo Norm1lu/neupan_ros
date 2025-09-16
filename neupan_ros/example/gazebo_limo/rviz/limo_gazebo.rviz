@@ -27,7 +27,7 @@ Panels:
   - Class: rviz/Time
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -67,7 +67,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
         car_castor_link:
           Alpha: 1
           Show Axes: false
@@ -84,6 +83,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         car_right_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        chassis_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -138,7 +142,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.029999999329447746
       Style: Flat Squares
-      Topic: /limo/scan
+      Topic: /richbeam_lidar_node0/scan0
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -276,7 +280,21 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
+        car_castor_link:
+          Value: true
+        car_castor_link1:
+          Value: true
+        car_left_link:
+          Value: true
+        car_right_link:
+          Value: true
+        chassis_link:
+          Value: true
         front_lidar_link:
+          Value: true
+        laser0:
+          Value: true
+        laser1:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -286,7 +304,18 @@ Visualization Manager:
       Show Names: true
       Tree:
         base_link:
-          front_lidar_link:
+          chassis_link:
+            car_castor_link:
+              car_castor_link1:
+                {}
+              front_lidar_link:
+                {}
+            car_left_link:
+              {}
+            car_right_link:
+              {}
+        laser0:
+          laser1:
             {}
       Update Interval: 0
       Value: true
@@ -294,7 +323,7 @@ Visualization Manager:
   Global Options:
     Background Color: 255; 255; 255
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: laser0
     Frame Rate: 30
   Name: root
   Tools:
@@ -318,7 +347,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.9754096269607544
+      Distance: 6.871561050415039
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -334,9 +363,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.06520269811153412
+      Pitch: 0.6797969341278076
       Target Frame: <Fixed Frame>
-      Yaw: 4.655395030975342
+      Yaw: 4.3754048347473145
     Saved: ~
 Window Geometry:
   Displays:

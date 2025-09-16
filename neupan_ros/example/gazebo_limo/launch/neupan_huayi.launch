@@ -1,0 +1,54 @@
+<launch>
+
+  <!-- 可配置参数（根据你的真机话题与帧） -->
+  <arg name="config_file" default="$(find neupan_ros)/example/gazebo_limo/config/neupan_planner_berrybolt.yaml"/>
+  <arg name="map_frame" default="odom"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="lidar_frame" default="laser0"/>
+  <arg name="scan_range" default="0.0 20.0"/>
+  <arg name="scan_angle_range" default="-3.14 3.14"/>
+  <arg name="marker_size" default="0.05"/>
+  <arg name="marker_z" default="0.3"/>
+  <arg name="scan_downsample" default="6"/>
+  <arg name="refresh_initial_path" default="false"/>
+  <arg name="dune_checkpoint" default='$(find neupan_ros)/example/gazebo_limo/pretrain_limo/model_5000.pth'/>
+
+  <!-- 载入URDF到 robot_description；如果你有xacro版本可改为 xacro 命令 -->
+  <param name="robot_description" textfile="$(find berrybolt_car)/urdf/berrybolt_car.urdf"/>
+
+  <!-- 发布基于URDF的TF -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="use_gui" value="false"/>
+    <param name="publish_default_positions" value="true"/>
+    <param name="rate" value="30"/>
+  </node>
+
+  <!-- 从里程计发布 odom->base_link TF -->
+  <node pkg="neupan_ros" type="odom_to_tf.py" name="odom_to_tf" output="screen">
+    <param name="odom_topic" value="/wheel_odometry_raw"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+  </node>
+
+  <!-- neupan 主控（模仿 neupan_gazebo_berrybolt.launch 的参数与remap） -->
+  <node name='neupan_control' pkg="neupan_ros" type="neupan_node.py" output="screen">
+      <param name="config_file" value="$(arg config_file)"/>
+      <param name="map_frame" value="$(arg map_frame)"/>
+      <param name="base_frame" value="$(arg base_frame)"/>
+      <param name="lidar_frame" value="$(arg lidar_frame)"/>
+      <param name="scan_range" value="$(arg scan_range)"/>
+      <param name="scan_angle_range" value="$(arg scan_angle_range)"/>
+      <param name="marker_size" value="$(arg marker_size)"/>
+      <param name="marker_z" value="$(arg marker_z)"/>
+      <param name="scan_downsample" value="$(arg scan_downsample)"/>
+      <param name="refresh_initial_path" value="$(arg refresh_initial_path)"/>
+      <param name="dune_checkpoint" value="$(arg dune_checkpoint)"/>
+
+      <remap from="/scan" to="/richbeam_lidar_node0/scan0"/>
+      <remap from="/neupan_cmd_vel" to="/cmd_vel_auto"/>
+      <remap from="/neupan_goal" to="/move_base_simple/goal"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find neupan_ros)/example/gazebo_limo/rviz/limo_gazebo.rviz" />
+</launch> 
